@@ -1,0 +1,69 @@
+################################################################################################
+
+INSTALL:
+
+1. Put all .py files into directory (example: "~/.scripts").
+
+2. In this directory, create a ".env" file with the following content:
+
+USERNAME = 'git_user_name'
+PASSWORD = 'git_password'
+
+Where:
+  git_user_name - username for GitHub account;
+  git_password - password for GitHub account.
+
+2. Add into ~/.bashrc file next lines:
+
+alias git_new='~/.scripts/git_init.py'
+alias git_show='~/.scripts/git_show.py'
+
+git_init() {
+    # Init GitHub repository in folder 'current_folder/"$2"/'
+    # $1 - GitHub username
+    # $2 - existing GitHub repository name
+    mkdir "$2"
+    cd "$2"
+    git init
+    git remote add origin git@github.com:"$1"/"$2".git
+    git pull origin master
+    git branch -u origin/master
+}
+
+################################################################################################
+
+USE:
+
+To create a new GitHub repository and open it in vs code:
+
+1. Bash:
+
+$ new_git repository_name -d description -p pivate (False/True)
+
+Example:
+
+$ new_git MyRepository -d My new repository -p False
+
+The script will create a new repository on GitHub and download its contents to the local repository in a folder:
+
+  /current_folder/repository_name
+
+Param:
+  repository_name - name of the repository you want to create (required param);
+  description - repository description (optional);
+  pivate - private or public repository - True or False (optional);
+  current_folder - folder where the script is executed via bash.
+  
+To download an existing repository to a local repository "/current_folder/repository_name":
+
+1. Bash:
+
+$ git_init repository_name
+
+To show all user repositories:
+
+1. Bash:
+
+$ git_show
+
+################################################################################################
