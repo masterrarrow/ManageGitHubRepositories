@@ -63,14 +63,16 @@ def local_repository(user: str, repository: str, folder: str):
 )
 @option(
     '--private', '-p',
-    type=bool,
-    default=False,
+    type=str,
+    default='',
     help='private repository or not (True/False)',
 )
-def main(repository: str, description='', private=False):
+def main(repository: str, description='', private=''):
     # Get username and password from environment
     username = config('USERNAME')
     password = config('PASSWORD')
+    
+    private = True if private else False
 
     # Get the absolute path to the folder -
     # the path where the script is executed via bash
